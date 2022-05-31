@@ -1,0 +1,435 @@
+                                                    	 /* Ce Programme est Realisé Par: El Ouardi Marouan-AP9.
+															
+																		**Projet: Traitement de Texte.
+																		
+																		**Debut de Travail: Le 1 Janvier 2021.
+																		
+																**Derniere Mise a jour Appliquée: Le 9 Janvier 2021.*/
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+void Ecrire();
+void Lire();
+void Supprimer();
+char FileName[60];
+char TP[500], TEXTE[100];
+void ToMaj();
+void ToMin();
+void End();
+int ComptMot();
+int test=0;
+main()
+{
+	if(test==0)
+	{
+	printf("	 			 Ce Programme est Realise Par: El Ouardi Marouan-AP9.\n\n");
+	printf("						Projet: Traitement de Texte.\n\n");
+	printf("						Debut de Travail: Le 1 Janvier 2021.\n\n");
+	printf("					Derniere Mise a jour Appliquee: Le 9 Janvier 2021.\n\n");
+	sleep(2);
+	system("CLS");
+	test=1;
+	}
+	char rech[14];
+	int x,nb,i,choix;
+	printf("\t\t	  Traitement de Texte\n");
+    printf("\n-----------------------------------------------------------------------------\n");
+	printf("\t\t	=====MENU Principal=====");
+    printf("\n-----------------------------------------------------------------------------\n");
+    printf("\n");
+    printf("=> Appuyez -----{'1'}----- pour Ecrire un Texte.");
+    printf("\n");
+    printf("\n=> Appuyez -----{'2'}----- pour Lire un Texte(s il existe).\n");
+    printf("\n");
+    printf("=> Appuyez -----{'3'}----- pour Supprimer l apparition d un Charactere.");
+    printf("\n");
+    printf("\n=> Appuyez -----{'4'}----- pour Convertir de Minuscule au Majuscule.");
+    printf("\n");
+    printf("\n=> Appuyez -----{'5'}----- pour Convertir de Majuscule au Minuscule.");
+    printf("\n");
+    printf("\n=> Appuyez -----{'6'}----- pour compter le nombre d occurence d un mot.");
+    printf("\n");
+    printf("\n=> Appuyez -----{'0'}----- pour Sortir du Programme.");
+    printf("\n");
+    printf("\n-----------------------------------------------------------------------------\n");
+    printf("\n");
+    printf("\n-Entrez votre choix: ");
+    scanf("%d",&x);
+    if( x<0 || x>6)
+    {
+    	printf("***Erreur!***\n");
+    	sleep(1);
+    	scanf("%d", &x);
+	}
+	system("cls");
+	switch (x)
+	{
+		case 1: Ecrire(FileName);
+				break;
+		case 2: Lire(FileName);
+				break;
+		case 3: Supprimer(FileName);
+				break;
+		case 4: ToMaj(TP, FileName);
+				break;
+		case 5: ToMin(TP, FileName); 
+				break;
+		case 6: printf("\nDonnez le mot a rechercher (occurence)\n");
+				fflush(stdin);
+				scanf("%s", &rech);
+				nb=ComptMot(rech,FileName);
+				printf("le mot '%s' a ete repete %d fois",rech, nb);
+				sleep(1);
+				printf("\n---------------------------------------------");
+   				printf("\n");
+    			printf("\n Pour revenir au Menu principal tapez {'1'}");
+    			printf("\n");
+    			printf("\n Pour quitter le programme tapez {'0'}");
+    			printf("\n");
+    			printf("\n---------------------------------------------\n");
+    			printf("\n-Entrez votre choix: ");
+				scanf("%d", &choix);
+				if( choix<0 || choix>1)
+    				{
+    					printf("\n***Erreur!***\n");
+    					sleep(1);
+    					scanf("%d", &choix);
+					}
+				if(choix==1)
+					{
+						system("cls");
+						main();
+					}
+				if(choix==0)
+					{
+						printf("\n\t\t\t\t----------------");
+						printf("\n\t\t\t\tFIN DU PROGRAMME ");
+						printf("\n\t\t\t\t----------------");
+					}
+				break;
+		case 0:
+			printf("\n\t\t\t\t----------------");
+			printf("\n\t\t\t\tFIN DU PROGRAMME ");
+			printf("\n\t\t\t\t----------------");
+			break;
+		default: 
+				break;
+	}
+}
+//========================================================================================================================================================================================
+//#                                                                                      Ecriture                                                                                         #
+//========================================================================================================================================================================================
+void Ecrire(char FileName[60], char TP[300])
+{
+	FILE *fp;
+	int choix;
+	char filename[60], TEXTE[100], txt[4];
+	strcpy(txt, ".txt");
+	printf("Donnez le Nom de votre fichier Texte:\n");
+	fflush(stdin);
+	gets(filename);
+	strcpy(FileName, strncat(filename, txt, 4));
+	fp=fopen(FileName, "w");
+	if(fp==NULL)
+		{
+			printf("Erreur de creation de votre fichier Texte\n");	
+		}
+	else
+		{ 
+			system("cls");
+			printf("Votre fichier est creer sous nom: %s\n", FileName);
+			sleep(1);
+			system("cls");
+		}
+	printf("Vous pouvez ecrire votre Text: \n");
+	fgets(TEXTE, sizeof(TEXTE), stdin);
+    fprintf(fp, "%s", TEXTE);
+    fclose(fp);
+    sleep(1);
+    system("cls");
+    printf("***Votre Texte a ete bien enregistrer***\n");
+    sleep(1);
+    printf("\n---------------------------------------------");
+    printf("\n");
+    printf("\n Pour revenir au Menu principal tapez {'1'}");
+    printf("\n");
+    printf("\n Pour quitter le programme tapez {'0'}");
+    printf("\n");
+    printf("\n---------------------------------------------\n");
+    printf("\n-Entrez votre choix: ");
+	scanf("%d", &choix);
+	if( choix<0 || choix>1)
+    {
+    	printf("Erreur!");
+    	sleep(1);
+    	scanf("%d", &choix);
+	}
+	if(choix==1)
+		{
+			system("cls");
+			main();
+		}
+	if(choix==0)
+		{
+			printf("\n\t\t\t\t----------------");
+			printf("\n\t\t\t\tFIN DU PROGRAMME ");
+			printf("\n\t\t\t\t----------------");
+		}
+}
+//========================================================================================================================================================================================
+//#                                                                                      Lecture                                                                                           #
+//========================================================================================================================================================================================
+void Lire(char FileName[60], char TP[300])
+{
+	int i, choix;
+	FILE *fp;
+	char TEXTE[100], ch;
+	fp=fopen(FileName, "r");
+	if(fp==NULL)
+		{
+			printf("***Erreur d ouverture de votre fichier Texte***\n");	
+		}
+	else
+		{ 
+			system("");
+			printf("Votre fichier '%s' est ouvert\n", FileName);
+			sleep(1);
+			system("cls");
+		}
+	fgets(TEXTE, 100, fp);
+	system("cls");
+	printf("%s\n", TEXTE);
+	fclose(fp);
+	printf("\n---------------------------------------------");
+    printf("\n");
+    printf("\n Pour revenir au Menu principal tapez {'1'}");
+    printf("\n");
+    printf("\n Pour quitter le programme tapez {'0'}");
+    printf("\n");
+    printf("\n---------------------------------------------\n");
+    printf("\n-Entrez votre choix: ");
+	scanf("%d", &choix);
+	if( choix<0 || choix>1)
+    {
+    	printf("Erreur!");
+    	sleep(1);
+    	
+    	scanf("%d", &choix);
+	}
+	if(choix==1)
+		{
+			system("cls");
+			main();
+		}
+	if(choix==0)
+		{
+			printf("\n\t\t\t\t----------------");
+			printf("\n\t\t\t\tFIN DU PROGRAMME ");
+			printf("\n\t\t\t\t----------------");
+		}
+}
+//========================================================================================================================================================================================
+//#                                                                                      Suppression                                                                                     #
+//========================================================================================================================================================================================
+void Supprimer(FileName)
+{
+	int i, j, n, choix;
+	FILE *fp, *fp2;
+	char TEXTE[100],T, ch;
+	fp=fopen(FileName, "r");
+	fp2=fopen("fichier0.txt", "w");
+	if(fp==NULL)
+		{
+			printf("***Erreur d ouverture de votre fichier '%s'***\n", FileName);	
+		}
+	else
+		{ 
+			system("");
+			printf("Votre fichier '%s' est ouvert\n", FileName);
+			sleep(2);
+			system("cls");
+		}
+	printf("Tapez le charactere a supprimer: ");
+	fflush(stdin);
+	scanf("%c", &ch);
+	
+		while((T = fgetc(fp)) != EOF)
+			{
+				if(T!= ch)
+				{
+					fprintf(fp2,"%c",T);
+				}
+			}
+	fclose(fp);
+	fclose(fp2);
+	remove(FileName);
+	rename("fichier0.txt", FileName);
+	sleep(1);
+	printf("\n Le charactere '%c', a ete bien supprimer de '%s'", ch, FileName);
+	printf("\n---------------------------------------------");
+   	printf("\n");
+   	printf("\n Pour revenir au Menu principal tapez {'1'}");
+   	printf("\n");
+   	printf("\n Pour quitter le programme tapez {'0'}");
+   	printf("\n");
+    printf("\n---------------------------------------------\n");
+  	printf("\n-Entrez votre choix: ");
+	scanf("%d", &choix);
+	if( choix<0 || choix>1)
+    {
+    	printf("***Erreur!***");
+    	sleep(1);
+    	scanf("%d", &choix);
+	}
+	if(choix==1)
+		{
+			system("cls");
+			main();
+		}
+	if(choix==0)
+		{
+			printf("\n\t\t\t\t----------------");
+			printf("\n\t\t\t\tFIN DU PROGRAMME ");
+			printf("\n\t\t\t\t----------------");
+		}
+}
+//========================================================================================================================================================================================
+//#                                                                                      Min To Maj                                                                                      #
+//========================================================================================================================================================================================
+void ToMaj(char TP[300], char FileName [60])
+{
+	FILE *fp ,*ft;
+	int i=0, choix;
+	char c, m[300];
+	ft=fopen("fichier0.txt", "w");
+	fp=fopen(FileName, "r");
+	while((c=getc(fp))!=EOF)
+	{
+		m[i]=toupper(c);
+		fprintf(ft,"%c",m[i]);	
+		i++;
+	}
+	fclose(fp);
+	fclose(ft);
+	remove(FileName);
+    rename("fichier0.txt",FileName);
+    system("cls");
+    printf("Votre Texte a ete bien converti au Majuscule\n");
+    sleep(1);
+	printf("\n---------------------------------------------");
+    printf("\n");
+    printf("\n Pour revenir au Menu principal tapez {'1'}");
+    printf("\n");
+    printf("\n Pour quitter le programme tapez {'0'}");
+    printf("\n");
+    printf("\n---------------------------------------------\n");
+    printf("\n-Entrez votre choix: ");
+	scanf("%d", &choix);
+	if( choix<0 || choix>1)
+    {
+    	printf("Erreur!");
+    	sleep(1);
+    	scanf("%d", &choix);
+	}
+	if(choix==1)
+		{
+			system("cls");
+			main();
+		}
+	if(choix==0)
+		{
+			printf("\n\t\t\t\t----------------");
+			printf("\n\t\t\t\tFIN DU PROGRAMME ");
+			printf("\n\t\t\t\t----------------");
+		}
+}
+//========================================================================================================================================================================================
+//#                                                                                      Maj To Min                                                                                      #
+//========================================================================================================================================================================================
+void ToMin(char TP[300], char FileName [60])
+{
+	FILE *fp ,*ft;
+	int i=0, choix;
+	char c, m[300];
+	ft=fopen("fichier0.txt", "w");
+	fp=fopen(FileName, "r");
+	while((c=getc(fp))!=EOF)
+	{
+		m[i]=tolower(c);
+		fprintf(ft,"%c",m[i]);	
+		i++;
+	}
+	fclose(fp);
+	fclose(ft);
+	remove(FileName);
+    rename("fichier0.txt",FileName);
+    printf("Votre Texte a ete bien converti au Miniscule\n");
+    sleep(1);
+	printf("\n---------------------------------------------");
+    printf("\n");
+    printf("\n Pour revenir au Menu principal tapez {'1'}");
+    printf("\n");
+    printf("\n Pour quitter le programme tapez {'0'}");
+    printf("\n");
+    printf("\n---------------------------------------------\n");
+    printf("\n-Entrez votre choix: ");
+	scanf("%d", &choix);
+	if( choix<0 || choix>1)
+    {
+    	printf("***Erreur!***");
+    	sleep(1);
+    	scanf("%d", &choix);
+	}
+	if(choix==1)
+		{
+			system("cls");
+			main();
+		}
+	if(choix==0)
+		{
+			printf("\n\t\t\t\t----------------");
+			printf("\n\t\t\t\tFIN DU PROGRAMME ");
+			printf("\n\t\t\t\t----------------");
+		}
+}
+//========================================================================================================================================================================================
+//#                                                                                      Occurance                                                                                     #
+//========================================================================================================================================================================================
+int ComptMot(char rech[14],char FileName[60])
+{
+		int choice;
+		FILE *fp;
+		fp = fopen(FileName,"r");
+		char c,m[100];
+		int i=0, choix;
+		while((c=fgetc(fp)) != EOF)
+		{
+			m[i]=c;
+			i++; 
+		}
+		i = 0;
+		int occ = 0,nb=0, j=0;
+		while (i<strlen(m) && j<strlen(rech))
+		{
+			if(m[i]==rech[j])
+			{
+				occ++;
+				i++;
+				j++;
+			}
+			else
+			{
+				j=0;
+				i++;
+			}
+			if(occ==strlen(rech))
+			{
+				nb++;
+				j=0;
+				occ=0;
+			}
+		}  
+		
+		return nb;	
+		fclose(fp);
+	}
